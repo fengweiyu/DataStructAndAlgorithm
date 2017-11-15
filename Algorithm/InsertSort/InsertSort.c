@@ -3,6 +3,13 @@
 ------------------------------------------------------------------------------
 * File Module		: 	InsertSort.c
 * Description		: 	InsertSort operation center
+
+一、基本思想
+直接插入排序是一种最简单的排序方法，它的基本操作是
+将一个记录插入到已排好序的有序表中，从而得到一个新
+的、记录数增1的有序表。
+最开始已排好序的有序表只有一个元素，即第一个元素。
+
 * Created			: 	2017.06.15.
 * Author			: 	Yu Weifeng
 * Function List 		: 	
@@ -66,6 +73,18 @@ int main(int argc,char **argv)
 /*****************************************************************************
 -Fuction		: InsertSort
 -Description	: // 对顺序表L作直接插入排序
+
+二、具体步骤
+1. 从第一个元素开始，如果后一个元素比前一个小，则
+2. 复制到哨兵，
+3. 如果哨兵元素小于有序表的元素，则该部分有序表右移
+4. 否则，这个位置的后一个位置就是要插入的位置
+
+例: 	{49,1},{38,2},{65,3},{97,4},{76,5},{13,6},{27,7},{49,8}
+	{38,2},{49,1},{38,2},{65,3},{97,4},{76,5},{13,6},{27,7},{49,8}
+	{38,2},{49,1},{49,1},{65,3},{97,4},{76,5},{13,6},{27,7},{49,8}
+	{38,2},{38,2},{49,1},{65,3},{97,4},{76,5},{13,6},{27,7},{49,8}
+	
 -Input			: 
 -Output 		: 
 -Return 		: 
@@ -80,9 +99,9 @@ static void InsertSort(T_RecordSeqList *i_ptRecordSeqList)
 	{
 		if(i_ptRecordSeqList->atRecord[i].Key<i_ptRecordSeqList->atRecord[i-1].Key)// "<",需将L.r[i]插入有序子表
 		{
-			memcpy(&i_ptRecordSeqList->atRecord[0],&i_ptRecordSeqList->atRecord[i],sizeof(T_RecordType));// 复制为哨兵
+			memcpy(&i_ptRecordSeqList->atRecord[0],&i_ptRecordSeqList->atRecord[i],sizeof(T_RecordType));// 避免数组越界,复制为哨兵
 			for(j=i-1;(i_ptRecordSeqList->atRecord[0].Key<i_ptRecordSeqList->atRecord[j].Key);j--)
-			{// 记录后移
+			{// 记录后移,同时找到插入的位置
 				memcpy(&i_ptRecordSeqList->atRecord[j+1],&i_ptRecordSeqList->atRecord[j],sizeof(T_RecordType));// 记录后移
 			}
 			memcpy(&i_ptRecordSeqList->atRecord[j+1],&i_ptRecordSeqList->atRecord[0],sizeof(T_RecordType));// 插入到正确位置
