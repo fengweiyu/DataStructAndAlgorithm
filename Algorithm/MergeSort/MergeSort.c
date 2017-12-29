@@ -3,6 +3,14 @@
 ------------------------------------------------------------------------------
 * File Module		: 	MergeSort.c
 * Description		: 	MergeSort operation center
+
+一、基本思想
+整个序列分为左右两半且要都是有序的,然后再归并
+左半部分又分为两半且要都是有序的,然后再归并
+右半部分又分为两半且要都是有序的,然后再归并(分割的子问题有和父问题是一样的处理考虑用递归)
+(递归中先前半部分(左边)变为有序,再后半部分(右边)变为有序)
+直到左右两半都只有一个元素即有序了再向上归并(子序列元素扩大,子序列数目减少)
+
 * Created			: 	2017.06.15.
 * Author			: 	Yu Weifeng
 * Function List 		: 	
@@ -86,11 +94,13 @@ static void MergeSort(T_RecordSeqList *i_ptRecordSeqList)
 /*****************************************************************************
 -Fuction		: MSort
 -Description	: // 将i_atSrcRecord[s(i_iLow)..t(i_iHigh)]归并排序为o_atDstRecord[s..t]。
-整个序列分为左右两半且要都是有序的,然后再归并
-左半部分又分为两半且要都是有序的,然后再归并
-右半部分又分为两半且要都是有序的,然后再归并(分割的子问题有和父问题是一样的处理考虑用递归)
-(递归中先前半部分(左边)变为有序,再后半部分(右边)变为有序)
-直到左右两半都只有一个元素即有序了再向上归并,
+
+二、具体步骤
+1. 递归地将左半部分归并为有序,即将i_atSrcRecord左半部分归并到atRecord
+2. 递归地将右半部分归并为有序,即将i_atSrcRecord右半部分归并到atRecord
+直到左右两半都只有一个元素即有序了再向上归并
+3. 归并左右两半为有序序列,即将atRecord的左右两半归并到o_atDstRecord
+
 -Input			: 
 -Output 		: 
 -Return 		: 
@@ -119,6 +129,16 @@ static void MSort(T_RecordType i_atSrcRecord[],T_RecordType o_atDstRecord[],int 
 -Fuction		: Merge
 -Description	: 
 // 将有序的i_atSrcRecord[i_iLow..i_iMid]和i_atSrcRecord[i_iMid+1..i_iHigh]归并为有序的TR[i..n]
+
+二、具体步骤
+3. 合并两个有序序列(一个序列的左右两部分)为一个有序序列
+3.1. 左右两边取小的部分保存
+左边更小保存起来，同时左边的指针i_iLow后移进行再次比较
+右边更小保存起来，同时右边的指针iRight后移进行再次比较
+3.2. 复制剩下的
+左边还有剩的，剩的部分都比右边的大,即都比已保存的大
+右边还有剩的，剩的部分都比左边的大,即都比已保存的大
+	
 -Input			: 
 -Output 		: 
 -Return 		: 
@@ -141,7 +161,7 @@ static void Merge(T_RecordType i_atSrcRecord[],T_RecordType o_atDstRecord[],int 
 			o_atDstRecord[i]=i_atSrcRecord[iRight++];;//右边更小保存起来，同时右边的指针i后移进行再次比较
 		}
 	}
-	
+	//复制剩下的
 	if(i_iLow<=i_iMid)//左边还有剩的，即剩的部分都比右边的大
 	{
 		for(j=0;j<=i_iMid-i_iLow;j++)

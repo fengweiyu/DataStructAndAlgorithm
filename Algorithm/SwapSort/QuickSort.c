@@ -10,6 +10,8 @@
 然后,确定该元素的位置(在排序好的有序序列中的位置)
 接着,以该元素确定好的位置将序列划分为两半,每一半序列
 再找一个元素，然后确定位置，接着再划分,不断重复(递归)
+直到确定的是一个元素(不能再划分)则 该部分递归结束，
+直到确定的是最后一个元素(不能再划分)，则排序结束。
 
 例:
 [yweifeng@localhost test]$ gcc -o QuickSort QuickSort.c 
@@ -88,7 +90,7 @@ int main(int argc,char **argv)
 二、具体步骤
 1. 确定某个元素位置,然后以该位置划分两半(已确定的位置
 当然不划入),分别进行递归来确定子序列中某个元素位置,
-直到子序列只有一个元素,即当所有的元素位置已确定
+直到所有子序列只有一个元素,即所有的元素位置已确定
 
 -Input			: 
 -Output 		: 
@@ -117,10 +119,10 @@ static void QuickSort(T_RecordSeqList *i_ptRecordSeqList,int i_iLow,int i_iHigh)
 二、具体步骤
 2. 两个位置指针l/h分别指向序列的首尾,取第一个元素为比较元素
 
-3. h不断向左移动,当h指向的元素比比较元素的值小,
-h指向的赋值为l指向的,然后h不动,执行步骤4
-4. l不断向右移动,当l指向的元素比比较元素的值大,
-l指向的赋值为h指向的,然后l不动,执行步骤3
+3. 当h指向的元素比比较元素的值大,h不断向左移动;否则,
+h指向的赋值给l指向的,然后h不动,执行步骤4
+4. 当l指向的元素比比较元素的值小,l不断向右移动;否则,
+l指向的赋值给h指向的,然后l不动,执行步骤3
 
 5. 当l=h时，就确定了比较元素的位置
 
@@ -133,7 +135,7 @@ l指向的赋值为h指向的,然后l不动,执行步骤3
 ******************************************************************************/
 static int FindPos(T_RecordSeqList *i_ptRecordSeqList,int i_iLow,int i_iHigh)
 {
-#if 1//如果不是从第一个元素开始或者一开始不是h向右移动,则排序出错
+#if 1//如果不是从第一个元素开始或者一开始不是h向左移动,则排序出错
 		T_RecordType tVal;
 		memcpy(&tVal,&i_ptRecordSeqList->atRecord[i_iLow],sizeof(T_RecordType));//第一个记录用作比较元素
 		while(i_iLow<i_iHigh)
@@ -153,7 +155,7 @@ static int FindPos(T_RecordSeqList *i_ptRecordSeqList,int i_iLow,int i_iHigh)
 		memcpy(&i_ptRecordSeqList->atRecord[i_iLow],&tVal,sizeof(T_RecordType));//i_iLow=i_iHigh确定位置
 		return i_iLow;//i_iLow 或者i_iHigh都行
 
-#else//如果不是从第一个元素开始或者一开始不是h向右移动,则排序出错
+#else//如果不是从第一个元素开始或者一开始不是h向左移动,则排序出错
 		int iVal=i_ptRecordSeqList->atRecord[i_iLow].Key;//第一个记录用作比较元素
 		T_RecordType tVal;
 		while(i_iLow<i_iHigh)
@@ -179,7 +181,7 @@ static int FindPos(T_RecordSeqList *i_ptRecordSeqList,int i_iLow,int i_iHigh)
 #endif
 
 
-#if 0//如果不是从第一个元素开始或者一开始不是h向右移动,则排序出错
+#if 0//如果不是从第一个元素开始或者一开始不是h向左移动,则排序出错
 	T_RecordType tVal;
 	T_RecordType tTempVal;
 	memcpy(&tVal,&i_ptRecordSeqList->atRecord[i_iLow],sizeof(T_RecordType));//第一个记录用作比较元素

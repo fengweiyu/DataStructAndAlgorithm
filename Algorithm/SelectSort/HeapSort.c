@@ -102,9 +102,9 @@ int main(int argc,char **argv)
 -Description	: // 对顺序表L作堆排序
 
 二、具体步骤
-1. 将无序序列建立成大顶堆
-2. 将大顶堆根元素取出，同时调整剩下元素为堆
-直到剩下元素为1个
+1. 将整个无序序列建立成大顶堆
+2. 将大顶堆根元素和序列最后的交换，同时堆序列长度减一
+并调整剩下元素(减去交换到最后的)为堆,直到剩下元素为1个
 
 -Input			: 
 -Output 		: 
@@ -124,9 +124,9 @@ static void HeapSort(T_RecordSeqList *i_ptRecordSeqList)
 	for(i=i_ptRecordSeqList->iLength;i>1;i--)
 	{// 将堆顶记录和当前未经排序子序列H.r[1..i]中最后一个记录相互交换
 		memcpy(&tRecord,&i_ptRecordSeqList->atRecord[i],sizeof(T_RecordType));
-		memcpy(&i_ptRecordSeqList->atRecord[i],&i_ptRecordSeqList->atRecord[1],sizeof(T_RecordType));
-		memcpy(&i_ptRecordSeqList->atRecord[1],&tRecord,sizeof(T_RecordType));
-
+		memcpy(&i_ptRecordSeqList->atRecord[i],&i_ptRecordSeqList->atRecord[1],sizeof(T_RecordType));//取出最大的(堆顶)放在序列最后
+		memcpy(&i_ptRecordSeqList->atRecord[1],&tRecord,sizeof(T_RecordType));//(原先最后的放到堆顶去)
+		//同时堆序列长度减一//重复直到堆序列长度为1
 		HeapAdjust(i_ptRecordSeqList,1,i-1); // 将H.r[1..i-1]重新调整为大顶堆
 	}
 }
@@ -142,8 +142,9 @@ static void HeapSort(T_RecordSeqList *i_ptRecordSeqList)
 3. 调整
 首先比较的根节点(待调整的节点))的两个孩子，取较大的
 若根节点(待调整的节点)大于较大的孩子，则根节点(待调整的节点)
-应当放在该孩子的位置上。
-否则，向上移动该孩子，根节点(待调整的节点)继续向下比较
+应当放在该孩子的父位置上。
+否则，移动该孩子到其父位置上(向上移动)，
+根节点(待调整的节点)继续向下比较
 
 -Input			: 
 -Output 		: 

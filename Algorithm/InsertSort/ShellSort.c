@@ -137,8 +137,8 @@ static void ShellSort(T_RecordSeqList *i_ptRecordSeqList,int *i_atDk,int i_DkLen
 static void ShellInsert(T_RecordSeqList *i_ptRecordSeqList,int i_iDk)
 {
 	int i,j;
-	for(i=i_iDk+1;i<=i_ptRecordSeqList->iLength;i++)//一次循环为相同间隔的一个子序列
-	{
+	for(i=i_iDk+1;i<=i_ptRecordSeqList->iLength;i++)//一次循环为相同间隔的一个子序列//取子序列是从后往前取，同时
+	{//子序列开始只有两个元素,当i-i_iDk移动到i_iDk+1位置后，子序列元素个数就会大于2,并且子序列该位置前面的元素均有序
 		if(i_ptRecordSeqList->atRecord[i].Key<i_ptRecordSeqList->atRecord[i-i_iDk].Key)//小于则要插入到有序增量子表
 		{
 			memcpy(&i_ptRecordSeqList->atRecord[0],&i_ptRecordSeqList->atRecord[i],sizeof(T_RecordType));//取出元素暂存在r[0]

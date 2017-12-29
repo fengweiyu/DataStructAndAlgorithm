@@ -3,6 +3,11 @@
 ------------------------------------------------------------------------------
 * File Module		: 	SelectSort.c
 * Description		: 	SelectSort operation center
+
+一、基本思想
+在无序序列(初始为整个序列)中选择一个最小的放在第一个位置，
+然后有序序列(初始无元素)长度加一，无序序列长度减一
+
 * Created			: 	2017.06.15.
 * Author			: 	Yu Weifeng
 * Function List 		: 	
@@ -69,6 +74,12 @@ int main(int argc,char **argv)
 /*****************************************************************************
 -Fuction		: SelectSort
 -Description	: // 对顺序表L作简单选择排序
+
+二、具体步骤
+1. 选择无序序列(初始为整个序列)最小关键字的位置
+2. 判断位置是否是无序中的第一个位置，否则就要交换
+3.有序序列(初始无元素)加一，无序序列开始位置也加一(向后移动一位)
+
 -Input			: 
 -Output 		: 
 -Return 		: 
@@ -80,7 +91,7 @@ static void SelectSort(T_RecordSeqList *i_ptRecordSeqList)
 {
 	int i,j;
 	T_RecordType tRecord={0};
-	for(i=1;i<i_ptRecordSeqList->iLength;i++)
+	for(i=1;i<i_ptRecordSeqList->iLength;i++)//最后那个必然是最大的
 	{// 选择第i小的记录，并交换到位(选择第i小的放第i位)
 		j=SelectMinKey(i_ptRecordSeqList,i);// 在L.r[i..L.length]中选择key最小的记录
 		if(i!=j)
